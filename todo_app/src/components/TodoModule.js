@@ -33,15 +33,21 @@ class TodoModule extends Component {
 
   render() {
     return (
-      <div className="container">
-        <TodoHeader todoCnt={this.state.todos.length} />
-        <TodoList
-          todos={this.state.todos}
-          toggleTodo={this.toggleTodo}
-          deleteTodo={this.deleteTodo}
-        />
-        <AddTodo addTodo={this.addTodo} />
-      </div>
+      <section className="section">
+        <div className="container">
+          <TodoHeader todoCnt={this.state.todos.length} />
+          <section className="section">
+            <div className="columns">
+              <TodoList
+                todos={this.state.todos}
+                toggleTodo={this.toggleTodo}
+                deleteTodo={this.deleteTodo}
+              />
+              <AddTodo addTodo={this.addTodo} />
+            </div>
+          </section>
+        </div>
+      </section>
     );
   }
 

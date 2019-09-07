@@ -11,17 +11,19 @@ class TodoList extends Component {
   render() {
     const todos = this.props.todos;
     return (
-      <div className="todoList">
-        {todos.map(t => {
-          return (
-            <TodoItem
-              key={t.id}
-              todo={t}
-              toggleTodo={this.props.toggleTodo}
-              deleteTodo={this.props.deleteTodo}
-            />
-          );
-        })}
+      <div className="column is-two-thirds">
+        <div className="list">
+          {todos.map(t => {
+            return (
+              <TodoItem
+                key={t.id}
+                todo={t}
+                toggleTodo={this.props.toggleTodo}
+                deleteTodo={this.props.deleteTodo}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }

@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 
+import "./TodoHeader.css";
+
 class TodoHeader extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <div className="row">
-        <div>
-          <h4>My Todo List</h4>
+      <section id="todoHeader" className="section">
+        <div className="content">
+          <h2>My Todo List</h2>
           <div>
-            <p>You have {this.props.todoCnt || "?"} todo items.</p>
+            <p>
+              You have{" "}
+              <strong className="has-text-danger">
+                {this.props.todoCnt || "?"}
+              </strong>{" "}
+              todo items.
+            </p>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./AddTodo.css";
+
 class AddTodo extends Component {
   constructor(props) {
     super(props);
@@ -10,24 +12,28 @@ class AddTodo extends Component {
 
   render() {
     return (
-      <div className="row justify-content-center">
-        <div className="col-8 input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="New todo item..."
-            value={this.state.inputValue}
-            onChange={this.inputEdit}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-success"
-              type="button"
-              onClick={this.addTodo}
-              disabled={!this.state.inputValue ? true : false}
-            >
-              add
-            </button>
+      <div className="column">
+        <div className="input-with-button">
+          <div className="field has-addons">
+            <div className="control">
+              <input
+                type="text"
+                className="input is-primary"
+                placeholder="New todo item..."
+                value={this.state.inputValue}
+                onChange={this.inputEdit}
+              />
+            </div>
+            <div className="control">
+              <button
+                className="button is-primary"
+                type="submit"
+                onClick={this.addTodo}
+                disabled={!this.state.inputValue ? true : false}
+              >
+                <span>Add</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

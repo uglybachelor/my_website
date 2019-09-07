@@ -1,0 +1,5 @@
+.input-with-button {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: 5fr 1fr;
+}
