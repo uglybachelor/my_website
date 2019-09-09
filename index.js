@@ -3,6 +3,9 @@ const path = require("path");
 
 const app = express();
 
+require("./db");
+
+// allow crors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
   res.header(
@@ -21,7 +24,7 @@ app.use(express.static(path.join(__dirname, "todo_app/build")));
 
 require("./routers/TodoRouter")(app);
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log("listening on port 8000...");

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import uuid from "node-uuid";
 
 import TodoHeader from "./TodoHeader";
 import TodoList from "./TodoList";
@@ -11,24 +12,13 @@ class TodoModule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [
-        {
-          id: 1,
-          content: "pick up dry cleaning",
-          status: false
-        },
-        {
-          id: 2,
-          content: "buy milk",
-          status: false
-        },
-        {
-          id: 3,
-          content: "study chapter 1",
-          status: true
-        }
-      ]
+      todos: []
     };
+  }
+
+  componentDidMount() {
+    // load all todos from "/api/getalltd"
+    this.loadAllTodos();
   }
 
   render() {
@@ -64,25 +54,43 @@ class TodoModule extends Component {
     });
   };
 
-  deleteTodo = id => {
-    const editedTodos = this.state.todos.filter(t => {
-      return t.id !== id;
-    });
-    this.setState({
-      todos: editedTodos
-    });
+  deleteTodo = async id => {
+    const res = await axios.post("/api/deltd", { id: id });
+
+    if (res.data === "success") {
+      const editedTodos = this.state.todos.filter(t => {
+        return t.id !== id;
+      });
+      this.setState({
+        todos: editedTodos
+      });
+    }
   };
 
-  addTodo = value => {
+  addTodo = async value => {
     const newTodo = {
-      id: 10,
+      id: uuid.v4(),
       content: value,
       status: false
     };
-    this.setState({
-      todos: [...this.state.todos, newTodo]
+    const res = await axios.post("/api/addtd", newTodo);
+    if (res.data === "success") {
+      this.setState({
+        todos: [...this.state.todos, newTodo]
+      });
+    }
+  };
+
+  loadAllTodos = async () => {
+    const res = await axios.get("/api/getalltd");
+    // replace the "_id" key with "id"
+    var todos = res.data;
+    todos = todos.map(t => {
+      return { id: t._id, content: t.content, status: t.status };
     });
-    axios.get("/api");
+    this.setState({
+      todos: todos
+    });
   };
 }
 

@@ -20,7 +20,7 @@ class TodoItem extends Component {
               onChange={this.props.toggleTodo.bind(this, todo.id)}
             />
             <label
-              className={todo.status ? "content-striked" : ""}
+              className={todo.status ? "todo-content striked" : "todo-content"}
               htmlFor={todo.id}
             >
               {todo.content}

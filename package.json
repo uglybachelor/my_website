@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.6.13",
+    "node-uuid": "^1.4.8"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
