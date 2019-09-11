@@ -1,0 +1,26 @@
+.post-list-item {
+  margin: 20px 0px;
+}
+
+.summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* limit summary display lines */
+  -webkit-box-orient: vertical;
+}
+
+.readmore {
+  color: rgb(101, 182, 135);
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.time {
+  padding: 0px 10px 0px 10px;
+  font-size: 6px;
+}
