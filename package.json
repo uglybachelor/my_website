@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.10.0",
+    "npm": "6.10.3"
+  },
   "scripts": {
     "todo-dev": "concurrently \"nodemon index.js\" \"npm run start --prefix todo_app\"",
     "blog-dev": "concurrently \"nodemon index.js\" \"npm run start --prefix blog_app\"",
-    "build": "node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
