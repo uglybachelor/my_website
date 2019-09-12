@@ -6,7 +6,7 @@
   "scripts": {
     "todo-dev": "concurrently \"nodemon index.js\" \"npm run start --prefix todo_app\"",
     "blog-dev": "concurrently \"nodemon index.js\" \"npm run start --prefix blog_app\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "node index.js"
   },
   "author": "",
   "license": "ISC",
