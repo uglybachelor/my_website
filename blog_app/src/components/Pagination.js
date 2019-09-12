@@ -4,33 +4,50 @@ class Pagination extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageCount: this.props.pageCount
+      currPage: 1
     };
   }
+
   render() {
-    const pageArray = Object.keys(new Int8Array(this.state.pageCount)).map(
+    // create an array for page numbers, eg [1,2,3,4,5...]
+    const pageArray = Object.keys(new Int8Array(this.props.pageCount)).map(
       Number
     );
     return (
       <div className="section">
         <nav className="pagination" role="navigation" aria-label="pagination">
-          <a class="pagination-previous">Previous</a>
-          <a class="pagination-next">Next page</a>
+          <a
+            className="pagination-previous"
+            onClick={this.changePage.bind(this, "previous")}
+          >
+            Previous
+          </a>
+          <a
+            className="pagination-next"
+            onClick={this.changePage.bind(this, "next")}
+          >
+            Next page
+          </a>
 
-          {/* if over 5 pages, use "..." ; if not, show all page number*/}
-          {this.state.pageCount > 5 ? (
-            <ul class="pagination-list">
+          {/* if over 5 pages, use "..." ; if not, show all page number */}
+          {this.props.pageCount > 5 ? (
+            <ul className="pagination-list">
               {pageArray
                 .filter(i => {
                   return i < 3;
                 })
                 .map(i => (
                   <li>
-                    <a class="pagination-link">{i + 1}</a>
+                    <a
+                      className="pagination-link"
+                      onClick={this.gotoPage.bind(this, i + 1)}
+                    >
+                      {i + 1}
+                    </a>
                   </li>
                 ))}
               <li>
-                <span class="pagination-ellipsis">&hellip;</span>
+                <span className="pagination-ellipsis">&hellip;</span>
               </li>
               {pageArray
                 .filter(i => {
@@ -38,16 +55,26 @@ class Pagination extends Component {
                 })
                 .map(i => (
                   <li>
-                    <a class="pagination-link">{i + 1}</a>
+                    <a
+                      className="pagination-link"
+                      onClick={this.gotoPage.bind(this, i + 1)}
+                    >
+                      {i + 1}
+                    </a>
                   </li>
                 ))}
             </ul>
           ) : (
-            <ul class="pagination-list">
+            <ul className="pagination-list">
               {pageArray.map(i => {
                 return (
                   <li>
-                    <a class="pagination-link">{i + 1}</a>
+                    <a
+                      className="pagination-link"
+                      onClick={this.gotoPage.bind(this, i + 1)}
+                    >
+                      {i + 1}
+                    </a>
                   </li>
                 );
               })}
@@ -57,6 +84,41 @@ class Pagination extends Component {
       </div>
     );
   }
+
+  // go to specific page
+  gotoPage = page => {
+    this.setState(
+      {
+        currPage: page
+      },
+      () => {
+        this.props.requestPostsInfo(this.state.currPage);
+      }
+    );
+  };
+
+  // go to next/previous page
+  changePage = type => {
+    if (type === "next") {
+      this.setState(
+        {
+          currPage: this.state.currPage + 1
+        },
+        () => {
+          this.props.requestPostsInfo(this.state.currPage);
+        }
+      );
+    } else {
+      this.setState(
+        {
+          currPage: this.state.currPage - 1
+        },
+        () => {
+          this.props.requestPostsInfo(this.state.currPage);
+        }
+      );
+    }
+  };
 }
 
 export default Pagination;

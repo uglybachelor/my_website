@@ -15,9 +15,12 @@ class BlogList extends Component {
       <section className="section">
         <div className="container post-list">
           {this.props.postsInfo.map(pi => {
-            return <BlogListItem id={pi.id} postInfo={pi} />;
+            return <BlogListItem key={pi.id} postInfo={pi} />;
           })}
-          <Pagination pageCount={this.props.pageCount} />
+          <Pagination
+            pageCount={this.props.pageCount}
+            requestPostsInfo={this.props.requestPostsInfo}
+          />
         </div>
       </section>
     );

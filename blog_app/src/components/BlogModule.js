@@ -1,77 +1,24 @@
 import React, { Component } from "react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
+import axios from "axios";
 
 import BlogList from "./BlogList";
 import Nav from "./Nav";
+import { CLIENT_RENEG_LIMIT } from "tls";
 class BlogModule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postsInfo: [
-        {
-          id: 1,
-          title: "My first blog post",
-          summary:
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus similique repellat, dolor sequi numquam quaerat exercitationem consectetur hic nulla delectus earum. Rem ducimus maxime eius pariatur deserunt doloribus velit! Vero?"
-        },
-        {
-          id: 2,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 3,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 4,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 5,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 6,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 7,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 8,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 9,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        },
-        {
-          id: 10,
-          title: "My first blog post",
-          summary:
-            "This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. This is my first post. "
-        }
-      ],
-      pageCount: 4
+      postsInfo: [],
+      pageCount: 0
     };
   }
+
+  componentDidMount() {
+    // start with page 1
+    this.requestPostsInfo(1);
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -84,12 +31,41 @@ class BlogModule extends Component {
               {...props}
               postsInfo={this.state.postsInfo}
               pageCount={this.state.pageCount}
+              requestPostsInfo={this.requestPostsInfo}
             />
           )}
         />
       </BrowserRouter>
     );
   }
+
+  // request posts information from backend
+  // only for blog list, not including contents
+  requestPostsInfo = async currPage => {
+    try {
+      var data = await axios.post("/api/posts", { currPage: currPage });
+    } catch (error) {
+      console.error(error);
+    }
+
+    const pageCount = data.data.pageCount;
+    var postsInfo = data.data.postsInfo;
+
+    // conver key "_id" to "id"
+    postsInfo = postsInfo.map(pi => {
+      return {
+        id: pi._id,
+        title: pi.title,
+        summary: pi.summary,
+        date: pi.date
+      };
+    });
+
+    this.setState({
+      postsInfo: postsInfo,
+      pageCount: pageCount
+    });
+  };
 }
 
 export default BlogModule;

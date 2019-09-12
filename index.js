@@ -3,9 +3,10 @@ const path = require("path");
 
 const app = express();
 
+// init db
 require("./db");
 
-// allow crors
+// allow cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
   res.header(
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "todo_app/build")));
 
 require("./routers/TodoRouter")(app);
+require("./routers/BlogRouter")(app);
 
 const PORT = process.env.PORT || 8000;
 

@@ -25,19 +25,19 @@ module.exports = app => {
     });
     try {
       await newTodo.save();
-      res.send("success");
     } catch (error) {
       next(error);
     }
+    res.send("success");
   });
 
   app.post("/api/deltd", async (req, res, next) => {
     const id = req.body.id;
     try {
       await Todos.deleteOne({ _id: id });
-      res.send("success");
     } catch (error) {
       next(error);
     }
+    res.send("success");
   });
 };

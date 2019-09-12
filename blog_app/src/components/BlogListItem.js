@@ -14,7 +14,7 @@ class BlogListItem extends Component {
         <div className="card-header title-section">
           <div className="card-header-title title">{postInfo.title}</div>
           <span className="has-text-grey time">
-            <time datetime="2019-09-09"> 2019.9.4</time>
+            <time dateTime={postInfo.date}>{postInfo.date}</time>
           </span>
         </div>
         <div className="card-content">
